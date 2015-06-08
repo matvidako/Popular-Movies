@@ -27,8 +27,7 @@ proguard/
 *.log
 
 /local.properties
-/PopularMovies/.idea/workspace.xml
-/PopularMovies/.idea/libraries
+/.idea/
 .DS_Store
 /build
 /captures
