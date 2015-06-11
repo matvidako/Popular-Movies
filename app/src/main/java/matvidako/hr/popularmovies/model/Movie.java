@@ -1,8 +1,9 @@
 package matvidako.hr.popularmovies.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Movie {
+public class Movie implements Serializable {
     public final String original_title;
     public final String overview;
     public final String poster_path;
@@ -20,6 +21,9 @@ public class Movie {
     public static class Tools {
         public static String getFullPosterPath(Movie movie) {
             return "http://image.tmdb.org/t/p/w342/" + movie.poster_path;
+        }
+        public static String getFullPosterPathLarge(Movie movie) {
+            return "http://image.tmdb.org/t/p/w500/" + movie.poster_path;
         }
     }
 

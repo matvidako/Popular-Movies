@@ -3,7 +3,7 @@
           xmlns:tools="http://schemas.android.com/tools"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:numColumns="3"
+          android:numColumns="@integer/count_movies_per_row"
           android:horizontalSpacing="@dimen/padding_xsmall"
           android:verticalSpacing="@dimen/padding_xsmall"
           android:layout_marginTop="@dimen/padding_small"
