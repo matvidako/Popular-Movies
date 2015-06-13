@@ -1,9 +1,13 @@
-package matvidako.hr.popularmovies;
+package matvidako.hr.popularmovies.moviedetails;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,8 +15,12 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.Arrays;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import matvidako.hr.popularmovies.ImageUtils;
+import matvidako.hr.popularmovies.R;
 import matvidako.hr.popularmovies.model.Movie;
 
 public class MovieDetailsActivity extends AppCompatActivity {
@@ -63,6 +71,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         Picasso.with(this).load(Movie.Tools.getFullPosterPath(movie)).into(imagePoster, new Callback() {
             @Override
             public void onSuccess() {
+                updateBackgroundColor();
             }
             @Override
             public void onError() {
@@ -71,6 +80,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvPlot.setText(movie.overview);
         tvRating.setText("" + movie.vote_average);
         tvReleaseDate.setText(movie.release_date.toString());
+    }
+
+    private void updateBackgroundColor() {
+        Bitmap bitmap = ImageUtils.getBitmap(imagePoster);
+        Palette palette = Palette.from(bitmap).generate();
+        int colorStart = palette.getDarkMutedColor(R.color.primary);
+        int colorEnd = palette.getDarkVibrantColor(R.color.primaryLight);
+        GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BR_TL, new int[]{colorStart, colorEnd});
+        gradientDrawable.setDither(true);
+        rootView.setBackgroundDrawable(gradientDrawable);
     }
 
 }

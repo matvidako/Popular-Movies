@@ -1,4 +1,4 @@
-package matvidako.hr.popularmovies;
+package matvidako.hr.popularmovies.movies;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.widget.GridView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import matvidako.hr.popularmovies.moviedetails.MovieDetailsActivity;
+import matvidako.hr.popularmovies.R;
 import matvidako.hr.popularmovies.model.PopularMoviesResponse;
 import matvidako.hr.popularmovies.net.MovieDb;
 import retrofit.Callback;

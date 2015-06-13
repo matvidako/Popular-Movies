@@ -1,4 +1,4 @@
-package matvidako.hr.popularmovies;
+package matvidako.hr.popularmovies.movies;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import matvidako.hr.popularmovies.R;
 import matvidako.hr.popularmovies.model.Movie;
 
 public class PopularMoviesAdapter extends BaseAdapter {
