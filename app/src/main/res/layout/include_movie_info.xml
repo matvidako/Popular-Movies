@@ -4,27 +4,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="@dimen/corner_radius_card"
-    tools:showIn="@layout/activity_movie_details">
+    app:cardCornerRadius="@dimen/corner_radius_card">
 
     <LinearLayout
         style="@style/CardContent">
 
         <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
-
-        <TextView
             android:id="@+id/release_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:text="2015"/>
 
         <TextView
             android:id="@+id/rating"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="5.4 / 10"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

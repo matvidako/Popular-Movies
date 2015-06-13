@@ -21,5 +21,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.1"/>
+
+        <TextView
+            android:id="@+id/plot1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1.1"/>
+
+        <TextView
+            android:id="@+id/plot2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1.1"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -3,20 +3,17 @@ package matvidako.hr.popularmovies.moviedetails;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
-import android.view.View;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
-import java.util.Arrays;
-import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -35,10 +32,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView tvReleaseDate;
     @InjectView(R.id.plot)
     TextView tvPlot;
+    @InjectView(R.id.plot1)
+    TextView tvPlot1;
+    @InjectView(R.id.plot2)
+    TextView tvPlot2;
     @InjectView(R.id.rating)
     TextView tvRating;
-    @InjectView(R.id.title)
-    TextView tvTitle;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
         loadFromIntent(getIntent());
         updateUi();
+        setupToolbar();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public static Intent buildIntent(Activity activity, Movie movie) {
@@ -79,10 +94,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
             public void onError() {
             }
         });
+        toolbar.setTitle(movie.original_title);
         tvPlot.setText(movie.overview);
-        tvRating.setText("" + movie.vote_average);
+        tvPlot1.setText(movie.overview);
+        tvPlot2.setText(movie.overview);
+        tvRating.setText(getString(R.string.rating_out_of_ten, String.format("%.1f", movie.vote_average)));
         tvReleaseDate.setText(movie.getReleaseYear());
-        tvTitle.setText(movie.original_title);
     }
 
     private void updateBackgroundColor() {
@@ -93,6 +110,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BR_TL, new int[]{colorStart, colorEnd});
         gradientDrawable.setDither(true);
         getWindow().setBackgroundDrawable(gradientDrawable);
+        toolbar.setBackgroundColor(palette.getVibrantColor(R.color.primary));
     }
 
 }
