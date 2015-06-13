@@ -1,6 +1,7 @@
 <resources>
     <dimen name="padding_standard">16dp</dimen>
-    <dimen name="height_movie_grid_item">220dp</dimen>
+    <dimen name="height_movie_grid_item">160dp</dimen>
     <dimen name="padding_small">8dp</dimen>
-    <dimen name="padding_xsmall">4dp</dimen>
+    <dimen name="spacing_grid_small">1dp</dimen>
+    <dimen name="spacing_grid_medium">4dp</dimen>
 </resources>
