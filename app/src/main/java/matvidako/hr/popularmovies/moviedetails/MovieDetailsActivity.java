@@ -16,6 +16,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
+import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -36,8 +37,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView tvPlot;
     @InjectView(R.id.rating)
     TextView tvRating;
-    @InjectView(R.id.root)
-    View rootView;
+    @InjectView(R.id.title)
+    TextView tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,19 +68,21 @@ public class MovieDetailsActivity extends AppCompatActivity {
             return;
         }
         ButterKnife.inject(this);
-        getSupportActionBar().setTitle(movie.original_title);
+        //getSupportActionBar().setTitle(movie.original_title);
         Picasso.with(this).load(Movie.Tools.getFullPosterPath(movie)).into(imagePoster, new Callback() {
             @Override
             public void onSuccess() {
                 updateBackgroundColor();
             }
+
             @Override
             public void onError() {
             }
         });
         tvPlot.setText(movie.overview);
         tvRating.setText("" + movie.vote_average);
-        tvReleaseDate.setText(movie.release_date.toString());
+        tvReleaseDate.setText(movie.getReleaseYear());
+        tvTitle.setText(movie.original_title);
     }
 
     private void updateBackgroundColor() {
@@ -89,7 +92,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         int colorEnd = palette.getDarkVibrantColor(R.color.primaryLight);
         GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BR_TL, new int[]{colorStart, colorEnd});
         gradientDrawable.setDither(true);
-        rootView.setBackgroundDrawable(gradientDrawable);
+        getWindow().setBackgroundDrawable(gradientDrawable);
     }
 
 }

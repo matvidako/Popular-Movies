@@ -1,9 +1,13 @@
 package matvidako.hr.popularmovies.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Movie implements Serializable {
+
+    private static SimpleDateFormat releaseYearDateFormat = new SimpleDateFormat("yyyy");
+
     public final String original_title;
     public final String overview;
     public final String poster_path;
@@ -16,6 +20,10 @@ public class Movie implements Serializable {
         this.poster_path = poster_path;
         this.vote_average = vote_average;
         this.release_date = release_date;
+    }
+
+    public String getReleaseYear() {
+        return releaseYearDateFormat.format(release_date);
     }
 
     public static class Tools {
