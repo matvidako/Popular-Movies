@@ -46,7 +46,7 @@ public class PopularMoviesAdapter extends BaseAdapter {
         Movie movie = getItem(position);
         convertView = layoutInflater.inflate(R.layout.list_item_movie, null, false);
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
-        Picasso.with(context).load(Movie.Tools.getFullPosterPath(movie)).placeholder(R.drawable.bg_placeholder).into(image);
+        Picasso.with(context).load(Movie.Tools.getFullPosterPath(movie, context.getString(R.string.param_poster_size))).placeholder(R.drawable.bg_placeholder).into(image);
         return convertView;
     }
 

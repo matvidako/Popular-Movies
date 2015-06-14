@@ -27,8 +27,8 @@ public class Movie implements Serializable {
     }
 
     public static class Tools {
-        public static String getFullPosterPath(Movie movie) {
-            return "http://image.tmdb.org/t/p/w342/" + movie.poster_path;
+        public static String getFullPosterPath(Movie movie, String posterSize) {
+            return "http://image.tmdb.org/t/p/" + posterSize + "/" + movie.poster_path;
         }
     }
 

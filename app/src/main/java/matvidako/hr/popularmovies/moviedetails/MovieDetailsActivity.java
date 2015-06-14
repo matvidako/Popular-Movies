@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,8 +81,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
             return;
         }
         ButterKnife.inject(this);
-        //getSupportActionBar().setTitle(movie.original_title);
-        Picasso.with(this).load(Movie.Tools.getFullPosterPath(movie)).into(imagePoster, new Callback() {
+
+        Picasso.with(this).load(Movie.Tools.getFullPosterPath(movie, getString(R.string.param_poster_size))).into(imagePoster, new Callback() {
             @Override
             public void onSuccess() {
                 updateBackgroundColor();
