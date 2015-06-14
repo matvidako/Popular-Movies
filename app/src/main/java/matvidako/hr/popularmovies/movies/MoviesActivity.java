@@ -1,6 +1,7 @@
 package matvidako.hr.popularmovies.movies;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -9,8 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import matvidako.hr.popularmovies.model.Movie;
 import matvidako.hr.popularmovies.moviedetails.MovieDetailsActivity;
 import matvidako.hr.popularmovies.R;
 import matvidako.hr.popularmovies.model.PopularMoviesResponse;
@@ -22,6 +26,9 @@ import retrofit.client.Response;
 
 public class MoviesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
+    private static final String STATE_GRID = "gridState";
+    Parcelable gridState;
+
     MovieDb movieDb;
     PopularMoviesAdapter moviesAdapter;
 
@@ -29,6 +36,7 @@ public class MoviesActivity extends AppCompatActivity implements AdapterView.OnI
     GridView gridPopularMovies;
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,19 @@ public class MoviesActivity extends AppCompatActivity implements AdapterView.OnI
         movieDb = new MovieDb();
         gridPopularMovies.setOnItemClickListener(this);
         movieDb.getMovieDbService().getPopularMovies(getPopularMoviesCallback);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        gridState = gridPopularMovies.onSaveInstanceState();
+        state.putParcelable(STATE_GRID, gridState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+        gridState = state.getParcelable(STATE_GRID);
     }
 
     @Override
@@ -56,21 +77,28 @@ public class MoviesActivity extends AppCompatActivity implements AdapterView.OnI
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        startActivity(MovieDetailsActivity.buildIntent(this, moviesAdapter.getItem(position)));
+    }
+
+    private void loadMoviesIntoGridView(List<Movie> movies) {
+        moviesAdapter = new PopularMoviesAdapter(MoviesActivity.this, movies);
+        gridPopularMovies.setAdapter(moviesAdapter);
+        if(gridState != null) {
+            gridPopularMovies.onRestoreInstanceState(gridState);
+        }
+    }
+
     Callback<PopularMoviesResponse> getPopularMoviesCallback = new Callback<PopularMoviesResponse>() {
         @Override
         public void success(PopularMoviesResponse movies, Response response) {
-            moviesAdapter = new PopularMoviesAdapter(MoviesActivity.this, movies.results);
-            gridPopularMovies.setAdapter(moviesAdapter);
+            loadMoviesIntoGridView(movies.results);
         }
 
         @Override
         public void failure(RetrofitError error) {
         }
     };
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(MovieDetailsActivity.buildIntent(this, moviesAdapter.getItem(position)));
-    }
 
 }
