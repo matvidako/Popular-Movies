@@ -5,4 +5,6 @@
     <string name="release_date">Release date</string>
     <string name="rating">Rating</string>
     <string name="rating_out_of_ten">%s / 10</string>
+    <string name="movie_sort">Sort movies by</string>
+    <string name="pref_key_sort">pref_sort</string>
 </resources>

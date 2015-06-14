@@ -1,5 +1,6 @@
 package matvidako.hr.popularmovies.movies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +15,13 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import matvidako.hr.popularmovies.PrefsManager;
 import matvidako.hr.popularmovies.model.Movie;
 import matvidako.hr.popularmovies.moviedetails.MovieDetailsActivity;
 import matvidako.hr.popularmovies.R;
 import matvidako.hr.popularmovies.model.PopularMoviesResponse;
 import matvidako.hr.popularmovies.net.MovieDb;
+import matvidako.hr.popularmovies.settings.SettingsActivity;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -46,7 +49,7 @@ public class MoviesActivity extends AppCompatActivity implements AdapterView.OnI
         setSupportActionBar(toolbar);
         movieDb = new MovieDb();
         gridPopularMovies.setOnItemClickListener(this);
-        movieDb.getMovieDbService().getPopularMovies(getPopularMoviesCallback);
+        movieDb.getMovieDbService().getPopularMovies(PrefsManager.getSortType(this), getPopularMoviesCallback);
     }
 
     @Override
@@ -72,6 +75,7 @@ public class MoviesActivity extends AppCompatActivity implements AdapterView.OnI
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
