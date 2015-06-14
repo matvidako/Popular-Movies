@@ -2,6 +2,7 @@ package matvidako.hr.popularmovies.movies;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,12 +27,15 @@ public class MoviesActivity extends AppCompatActivity implements AdapterView.OnI
 
     @InjectView(R.id.gridPopularMovies)
     GridView gridPopularMovies;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
         ButterKnife.inject(this);
+        setSupportActionBar(toolbar);
         movieDb = new MovieDb();
         gridPopularMovies.setOnItemClickListener(this);
         movieDb.getMovieDbService().getPopularMovies(getPopularMoviesCallback);
