@@ -32,10 +32,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView tvReleaseDate;
     @InjectView(R.id.plot)
     TextView tvPlot;
-    @InjectView(R.id.plot1)
-    TextView tvPlot1;
-    @InjectView(R.id.plot2)
-    TextView tvPlot2;
     @InjectView(R.id.rating)
     TextView tvRating;
     @InjectView(R.id.toolbar)
@@ -96,8 +92,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         });
         toolbar.setTitle(movie.original_title);
         tvPlot.setText(movie.overview);
-        tvPlot1.setText(movie.overview);
-        tvPlot2.setText(movie.overview);
         tvRating.setText(getString(R.string.rating_out_of_ten, String.format("%.1f", movie.vote_average)));
         tvReleaseDate.setText(movie.getReleaseYear());
     }
