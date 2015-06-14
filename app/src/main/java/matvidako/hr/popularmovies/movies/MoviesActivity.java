@@ -49,6 +49,15 @@ public class MoviesActivity extends AppCompatActivity implements AdapterView.OnI
         setSupportActionBar(toolbar);
         movieDb = new MovieDb();
         gridPopularMovies.setOnItemClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchMovies();
+    }
+
+    private void fetchMovies() {
         movieDb.getMovieDbService().getPopularMovies(PrefsManager.getSortType(this), getPopularMoviesCallback);
     }
 
