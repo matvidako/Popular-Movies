@@ -1,6 +1,7 @@
 package matvidako.hr.popularmovies.movies;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import matvidako.hr.popularmovies.R;
 import matvidako.hr.popularmovies.model.Movie;
 
@@ -44,10 +47,21 @@ public class PopularMoviesAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Movie movie = getItem(position);
-        convertView = layoutInflater.inflate(R.layout.list_item_movie, null, false);
-        ImageView image = (ImageView) convertView.findViewById(R.id.image);
-        Picasso.with(context).load(Movie.Tools.getFullPosterPath(movie, context.getString(R.string.param_poster_size))).placeholder(R.drawable.bg_placeholder).into(image);
+        if(convertView == null) {
+            convertView = layoutInflater.inflate(R.layout.list_item_movie, null, false);
+            convertView.setTag(new ViewHolder(convertView));
+        }
+        ViewHolder viewHolder = (ViewHolder) convertView.getTag();
+        Picasso.with(context).load(Movie.Tools.getFullPosterPath(movie, context.getString(R.string.param_poster_size))).placeholder(R.drawable.bg_placeholder).into(viewHolder.imageView);
         return convertView;
     }
 
+    static class ViewHolder {
+        @InjectView(R.id.image)
+        ImageView imageView;
+
+        ViewHolder(View view) {
+            ButterKnife.inject(this, view);
+        }
+    }
 }
