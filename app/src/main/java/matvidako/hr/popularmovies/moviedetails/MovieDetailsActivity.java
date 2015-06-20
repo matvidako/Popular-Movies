@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,11 +15,20 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import matvidako.hr.popularmovies.ImageUtils;
 import matvidako.hr.popularmovies.R;
 import matvidako.hr.popularmovies.model.Movie;
+import matvidako.hr.popularmovies.model.Review;
+import matvidako.hr.popularmovies.model.ReviewsResponse;
+import matvidako.hr.popularmovies.model.Trailer;
+import matvidako.hr.popularmovies.model.TrailersResponse;
+import matvidako.hr.popularmovies.net.MovieDb;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -39,6 +46,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
 
+    MovieDb movieDb = new MovieDb();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +55,44 @@ public class MovieDetailsActivity extends AppCompatActivity {
         loadFromIntent(getIntent());
         updateUi();
         setupToolbar();
+        loadTrailers();
+        loadReviews();
     }
+
+    private void loadReviews() {
+        movieDb.getMovieDbService().getReviews(movie.id, new retrofit.Callback<ReviewsResponse>() {
+            @Override
+            public void success(ReviewsResponse reviewsResponse, Response response) {
+                setupReviewUi(reviewsResponse.results);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
+    private void setupReviewUi(List<Review> results) {
+    }
+
+    private void loadTrailers() {
+        movieDb.getMovieDbService().getTrailers(movie.id, new retrofit.Callback<TrailersResponse>() {
+            @Override
+            public void success(TrailersResponse trailersResponse, Response response) {
+                setupTrailerUi(trailersResponse.results);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+            }
+        });
+    }
+
+    private void setupTrailerUi(List<Trailer> trailers) {
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
