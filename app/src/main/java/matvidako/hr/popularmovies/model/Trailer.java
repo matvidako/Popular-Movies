@@ -12,4 +12,9 @@ public class Trailer {
         this.key = key;
     }
 
+    public static class Tools {
+        public static String buildYoutubeUrl(Trailer trailer) {
+            return "http://www.youtube.com/watch?v=" + trailer.key;
+        }
+    }
 }

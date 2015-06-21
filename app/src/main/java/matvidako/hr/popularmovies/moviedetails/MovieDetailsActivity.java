@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -35,16 +38,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
     static final String EXTRA_MOVIE = "MOVIE";
     Movie movie;
 
-    @InjectView(R.id.image)
-    ImageView imagePoster;
-    @InjectView(R.id.release_date)
-    TextView tvReleaseDate;
-    @InjectView(R.id.plot)
-    TextView tvPlot;
-    @InjectView(R.id.rating)
-    TextView tvRating;
-    @InjectView(R.id.toolbar)
-    Toolbar toolbar;
+    @InjectView(R.id.image) ImageView imagePoster;
+    @InjectView(R.id.release_date) TextView tvReleaseDate;
+    @InjectView(R.id.plot) TextView tvPlot;
+    @InjectView(R.id.rating) TextView tvRating;
+    @InjectView(R.id.toolbar) Toolbar toolbar;
+    @InjectView(R.id.trailer_list) RecyclerView trailerList;
+    @InjectView(R.id.scrollView) NestedScrollView scrollView;
 
     MovieDb movieDb = new MovieDb();
 
@@ -68,7 +68,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-
             }
         });
     }
@@ -90,7 +89,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void setupTrailerUi(List<Trailer> trailers) {
-
+        trailerList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        trailerList.setAdapter(new TrailerAdapter(this, trailers));
     }
 
     @Override

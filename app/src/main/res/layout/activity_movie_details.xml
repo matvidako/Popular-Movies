@@ -13,6 +13,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -38,7 +39,7 @@
                     android:layout_height="wrap_content"/>
 
                 <android.support.v4.widget.Space
-                    android:layout_width="@dimen/padding_large"
+                    android:layout_width="@dimen/padding_standard"
                     android:layout_height="match_parent"/>
 
                 <include
@@ -47,13 +48,22 @@
 
             <android.support.v4.widget.Space
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/padding_large"/>
+                android:layout_height="@dimen/padding_standard"/>
 
             <include layout="@layout/include_movie_plot"/>
 
             <android.support.v4.widget.Space
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/padding_large"/>
+                android:layout_height="@dimen/padding_standard"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/trailer_list"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_trailer" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/padding_large" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>
