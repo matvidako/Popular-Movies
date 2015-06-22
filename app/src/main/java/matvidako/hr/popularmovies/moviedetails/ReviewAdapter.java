@@ -66,7 +66,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
         public void bind(Review review, View.OnClickListener onClickListener) {
             content.setText(review.content);
-            author.setText(review.author);
+            author.setText(author.getContext().getString(R.string.review_by, review.author));
             rootView.setTag(review);
             rootView.setOnClickListener(onClickListener);
         }
