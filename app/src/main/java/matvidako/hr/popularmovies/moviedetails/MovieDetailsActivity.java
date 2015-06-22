@@ -44,6 +44,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @InjectView(R.id.rating) TextView tvRating;
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.trailer_list) RecyclerView trailerList;
+    @InjectView(R.id.review_list) RecyclerView reviewList;
     @InjectView(R.id.scrollView) NestedScrollView scrollView;
 
     MovieDb movieDb = new MovieDb();
@@ -73,6 +74,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void setupReviewUi(List<Review> results) {
+        trailerList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        trailerList.setAdapter(new ReviewAdapter(this, results));
     }
 
     private void loadTrailers() {
