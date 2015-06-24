@@ -4,5 +4,11 @@
         android:key="@string/pref_key_sort"
         android:title="@string/movie_sort"
         android:entries="@array/pref_sort_by"
+        android:defaultValue="0"
         android:entryValues="@array/pref_sort_by_values"/>
+
+    <CheckBoxPreference
+        android:key="@string/pref_key_show_favorites_only"
+        android:title="@string/show_favorites_only"
+        android:defaultValue="false"/>
 </PreferenceScreen>

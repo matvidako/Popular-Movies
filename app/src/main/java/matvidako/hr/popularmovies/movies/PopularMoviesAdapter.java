@@ -9,10 +9,13 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import matvidako.hr.popularmovies.PrefsManager;
 import matvidako.hr.popularmovies.R;
 import matvidako.hr.popularmovies.model.Movie;
 
@@ -22,10 +25,25 @@ public class PopularMoviesAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public PopularMoviesAdapter(Context context, List<Movie> movies) {
-        this.movies = movies;
+    public PopularMoviesAdapter(Context context, List<Movie> movies, boolean isShowingFavoritesOnly) {
+        if(isShowingFavoritesOnly) {
+            this.movies = filterFavorites(context, movies);
+        } else {
+            this.movies = movies;
+        }
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
+    }
+
+    private List<Movie> filterFavorites(Context context, List<Movie> movies) {
+        Set<String> favoriteIds = PrefsManager.getFavoriteMovieIds(context);
+        List<Movie> favoriteMovies = new ArrayList<>();
+        for(Movie movie : movies) {
+            if(favoriteIds.contains(movie.id)) {
+                favoriteMovies.add(movie);
+            }
+        }
+        return favoriteMovies;
     }
 
     @Override

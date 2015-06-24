@@ -96,7 +96,7 @@ public class MoviesActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void loadMoviesIntoGridView(List<Movie> movies) {
-        moviesAdapter = new PopularMoviesAdapter(MoviesActivity.this, movies);
+        moviesAdapter = new PopularMoviesAdapter(MoviesActivity.this, movies, PrefsManager.isShowingFavoritesOnly(this));
         gridPopularMovies.setAdapter(moviesAdapter);
         if(gridState != null) {
             gridPopularMovies.onRestoreInstanceState(gridState);

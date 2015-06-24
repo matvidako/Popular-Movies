@@ -13,4 +13,6 @@
 
     <string name="pref_key_sort">pref_sort</string>
     <string name="pref_key_favorites">pref_favorites</string>
+    <string name="pref_key_show_favorites_only">pref_favorites_only</string>
+    <string name="show_favorites_only">Show only favorites</string>
 </resources>
