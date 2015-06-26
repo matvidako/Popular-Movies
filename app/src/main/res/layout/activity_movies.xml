@@ -11,9 +11,9 @@
         android:background="@color/primary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <fragment android:name="matvidako.hr.popularmovies.movies.MoviesFragment"
+    <fragment
         android:id="@+id/headlines_fragment"
-        android:layout_weight="1"
+        android:name="matvidako.hr.popularmovies.movies.MoviesFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_movies" />

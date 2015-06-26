@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,63 +40,38 @@ import retrofit.client.Response;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+
     static final String EXTRA_MOVIE = "MOVIE";
     Movie movie;
-
-    @InjectView(R.id.image) ImageView imagePoster;
-    @InjectView(R.id.release_date) TextView tvReleaseDate;
-    @InjectView(R.id.plot) TextView tvPlot;
-    @InjectView(R.id.rating) TextView tvRating;
-    @InjectView(R.id.toolbar) Toolbar toolbar;
-    @InjectView(R.id.trailer_list) RecyclerView trailerList;
-    @InjectView(R.id.review_list) FakeListView reviewList;
-
-    MovieDb movieDb = new MovieDb();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
+        ButterKnife.inject(this);
         loadFromIntent(getIntent());
-        updateUi();
+        if(movie == null) {
+            finish();
+            return;
+        }
         setupToolbar();
-        loadTrailers();
-        loadReviews();
+        setupFragment(savedInstanceState);
     }
 
-    private void loadReviews() {
-        movieDb.getMovieDbService().getReviews(movie.id, new retrofit.Callback<ReviewsResponse>() {
-            @Override
-            public void success(ReviewsResponse reviewsResponse, Response response) {
-                setupReviewUi(reviewsResponse.results);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-            }
-        });
+    private void setupFragment(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            return;
+        }
+        getFragmentManager().beginTransaction().add(R.id.fragment_container, MovieDetailsFragment.newInstance(movie)).commit();
     }
 
-    private void setupReviewUi(List<Review> results) {
-        reviewList.setAdapter(new ReviewAdapter(this, results));
-    }
-
-    private void loadTrailers() {
-        movieDb.getMovieDbService().getTrailers(movie.id, new retrofit.Callback<TrailersResponse>() {
-            @Override
-            public void success(TrailersResponse trailersResponse, Response response) {
-                setupTrailerUi(trailersResponse.results);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-            }
-        });
-    }
-
-    private void setupTrailerUi(List<Trailer> trailers) {
-        trailerList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        trailerList.setAdapter(new TrailerAdapter(this, trailers));
+    private void setupToolbar() {
+        toolbar.setTitle(movie.original_title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -115,12 +91,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(menuItem);
     }
 
-    private void setupToolbar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
     public static Intent buildIntent(Activity activity, Movie movie) {
         Intent intent = new Intent(activity, MovieDetailsActivity.class);
         intent.putExtra(EXTRA_MOVIE, movie);
@@ -133,40 +103,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
             return;
         }
         movie = (Movie) intent.getSerializableExtra(EXTRA_MOVIE);
-    }
-
-    private void updateUi() {
-        if(movie == null) {
-            finish();
-            return;
-        }
-        ButterKnife.inject(this);
-
-        Picasso.with(this).load(Movie.Tools.getFullPosterPath(movie, getString(R.string.param_poster_size))).into(imagePoster, new Callback() {
-            @Override
-            public void onSuccess() {
-                updateBackgroundColor();
-            }
-
-            @Override
-            public void onError() {
-            }
-        });
-        toolbar.setTitle(movie.original_title);
-        tvPlot.setText(movie.overview);
-        tvRating.setText(getString(R.string.rating_out_of_ten, String.format("%.1f", movie.vote_average)));
-        tvReleaseDate.setText(movie.getReleaseYear());
-    }
-
-    private void updateBackgroundColor() {
-        Bitmap bitmap = ImageUtils.getBitmap(imagePoster);
-        Palette palette = Palette.from(bitmap).generate();
-        int colorStart = palette.getDarkMutedColor(R.color.primary);
-        int colorEnd = palette.getDarkVibrantColor(R.color.primaryLight);
-        GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BR_TL, new int[]{colorStart, colorEnd});
-        gradientDrawable.setDither(true);
-        getWindow().setBackgroundDrawable(gradientDrawable);
-        toolbar.setBackgroundColor(palette.getVibrantColor(R.color.primary));
     }
 
 }
