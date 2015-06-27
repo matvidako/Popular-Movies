@@ -82,7 +82,7 @@ public class MoviesFragment extends Fragment implements AdapterView.OnItemClickL
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(MovieDetailsActivity.buildIntent(getActivity(), moviesAdapter.getItem(position)));
+        ((SelectionCallback)getActivity()).onSelectedMovieChanged(moviesAdapter.getItem(position));
     }
 
     private void loadMoviesIntoGridView(List<Movie> movies) {
@@ -103,4 +103,9 @@ public class MoviesFragment extends Fragment implements AdapterView.OnItemClickL
         public void failure(RetrofitError error) {
         }
     };
+
+    public interface SelectionCallback {
+        void onSelectedMovieChanged(Movie movie);
+    }
+
 }
