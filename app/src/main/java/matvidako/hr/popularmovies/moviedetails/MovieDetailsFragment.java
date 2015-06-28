@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -21,7 +22,9 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import matvidako.hr.popularmovies.ImageUtils;
+import matvidako.hr.popularmovies.PrefsManager;
 import matvidako.hr.popularmovies.R;
 import matvidako.hr.popularmovies.model.Movie;
 import matvidako.hr.popularmovies.model.Review;
@@ -142,4 +145,11 @@ public class MovieDetailsFragment extends Fragment {
         gradientDrawable.setDither(true);
         getActivity().getWindow().setBackgroundDrawable(gradientDrawable);
     }
+
+    @OnClick(R.id.favorite)
+    public void addToFavorites(View v) {
+        PrefsManager.addMovieToFavorites(getActivity(), movie);
+        Toast.makeText(getActivity(), getString(R.string.added_to_favorites), Toast.LENGTH_SHORT).show();
+    }
+
 }

@@ -75,18 +75,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_movie_details, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
             onBackPressed();
-        } else if(menuItem.getItemId() == R.id.action_favorite) {
-            PrefsManager.addMovieToFavorites(this, movie);
-            Toast.makeText(this, getString(R.string.added_to_favorites), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(menuItem);
     }

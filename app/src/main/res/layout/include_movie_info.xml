@@ -7,7 +7,8 @@
     app:cardCornerRadius="@dimen/corner_radius_card">
 
     <LinearLayout
-        style="@style/CardContent">
+        style="@style/CardContent"
+        android:paddingBottom="0dp">
 
         <TextView
             android:id="@+id/release_date"
@@ -21,7 +22,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="5.4 / 10"/>
+            tools:text="5.4 / 10"
+            android:paddingBottom="@dimen/padding_small"/>
 
+        <Button
+            android:id="@+id/favorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_gravity="center"
+            android:textColor="@color/accent"
+            android:text="@string/favorite"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>
