@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,8 @@ public class MovieDetailsFragment extends Fragment {
     RecyclerView trailerList;
     @InjectView(R.id.review_list)
     FakeListView reviewList;
+    @InjectView(R.id.favorite)
+    ImageButton btnFavorite;
 
     MovieDb movieDb = new MovieDb();
     Movie movie;
@@ -131,6 +134,11 @@ public class MovieDetailsFragment extends Fragment {
             public void onError() {
             }
         });
+
+        boolean isMovieFavorited = PrefsManager.isMovieInFavorites(getActivity(), movie);
+        btnFavorite.setActivated(isMovieFavorited);
+        btnFavorite.setEnabled(!isMovieFavorited);
+
         tvPlot.setText(getMovie().overview);
         tvRating.setText(getString(R.string.rating_out_of_ten, String.format("%.1f", getMovie().vote_average)));
         tvReleaseDate.setText(getMovie().getReleaseYear());
@@ -147,9 +155,11 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     @OnClick(R.id.favorite)
-    public void addToFavorites(View v) {
+    public void onFavoriteClick(View v) {
         PrefsManager.addMovieToFavorites(getActivity(), movie);
         Toast.makeText(getActivity(), getString(R.string.added_to_favorites), Toast.LENGTH_SHORT).show();
+        btnFavorite.setActivated(true);
+        btnFavorite.setEnabled(false);
     }
 
 }
