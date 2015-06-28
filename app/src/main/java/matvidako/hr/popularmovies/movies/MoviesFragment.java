@@ -82,6 +82,7 @@ public class MoviesFragment extends Fragment implements AdapterView.OnItemClickL
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        gridPopularMovies.setItemChecked(position, true);
         ((SelectionCallback)getActivity()).onSelectedMovieChanged(moviesAdapter.getItem(position));
     }
 

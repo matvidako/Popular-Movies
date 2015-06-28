@@ -3,6 +3,7 @@
 <GridView android:id="@+id/gridPopularMovies"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MovieGridView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:numColumns="@integer/count_movies_per_row"
