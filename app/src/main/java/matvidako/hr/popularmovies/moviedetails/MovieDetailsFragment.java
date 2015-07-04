@@ -81,6 +81,12 @@ public class MovieDetailsFragment extends Fragment {
         loadReviews();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
     private Movie getMovie() {
         if(movie == null) {
             movie = (Movie) getArguments().getSerializable(EXTRA_MOVIE);

@@ -55,6 +55,12 @@ public class MoviesFragment extends Fragment implements AdapterView.OnItemClickL
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         movieDb = new MovieDb();
